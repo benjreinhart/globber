@@ -1,6 +1,6 @@
 {
     "name": "globber"
-  , "version": "0.0.2"
+  , "version": "0.0.21"
   , "description": "Wrapper around node-glob with a friendly DSL"
   , "author": "benjreinhart"
   , "engines":
@@ -39,7 +39,7 @@
 
   , "bugs":
     {
-        "url": "https://github.com/benjreinhart/readr/issues"
+        "url": "https://github.com/benjreinhart/globber/issues"
     }
 
   , "scripts":
