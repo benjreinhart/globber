@@ -1,6 +1,6 @@
 # Globber
 
-Wrapper around node-glob with a friendly DSL.
+Wrapper around [node-glob](https://github.com/isaacs/node-glob) with a friendly DSL.
 
 ## Install
 
