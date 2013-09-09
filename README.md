@@ -21,6 +21,18 @@ globber('projects/app/templates', {extension: 'mustache'}, function(err, paths){
 */
 ```
 
+globber('projects/app/templates/**/*.mustache', function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'projects/app/templates/index.mustache',
+    'projects/app/templates/partials',
+    'projects/app/templates/partials/_form.mustache'
+  ]
+*/
+```
+
 ```javascript
 globber('projects/app/templates', {extension: 'mustache', includeDirectories: false}, function(err, paths){
   console.log(paths);
@@ -29,6 +41,17 @@ globber('projects/app/templates', {extension: 'mustache', includeDirectories: fa
   [
     'projects/app/templates/index.mustache',
     'projects/app/templates/partials/_form.mustache'
+  ]
+*/
+```
+
+```javascript
+globber('projects/app/templates', {extension: 'mustache', recursive: false}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'projects/app/templates/index.mustache'
   ]
 */
 ```
