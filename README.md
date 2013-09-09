@@ -15,32 +15,33 @@ globber('projects/app/templates', {extension: 'mustache'}, function(err, paths){
 /*
   [
     'projects/app/templates/index.mustache',
-    'projects/app/templates/partials',
     'projects/app/templates/partials/_form.mustache'
   ]
 */
 ```
 
 ```javascript
-globber('projects/app/templates/**/*.mustache', function(err, paths){
+globber('projects/app/templates/**/*', function(err, paths){
   console.log(paths);
 });
 /*
   [
     'projects/app/templates/index.mustache',
     'projects/app/templates/partials',
+    'projects/app/templates/info.txt',
     'projects/app/templates/partials/_form.mustache'
   ]
 */
 ```
 
 ```javascript
-globber('projects/app/templates', {extension: 'mustache', includeDirectories: false}, function(err, paths){
+globber('projects/app/templates/**/*', {includeDirectories: false}, function(err, paths){
   console.log(paths);
 });
 /*
   [
     'projects/app/templates/index.mustache',
+    'projects/app/templates/info.txt'
     'projects/app/templates/partials/_form.mustache'
   ]
 */
@@ -64,7 +65,6 @@ globber('projects/app/templates', {extension: 'mustache', absolute: true}, funct
 /*
   [
     '/Users/breinhart/projects/app/templates/index.mustache',
-    '/Users/breinhart/projects/app/templates/partials',
     '/Users/breinhart/projects/app/templates/partials/_form.mustache'
   ]
 */
