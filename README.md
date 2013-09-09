@@ -54,10 +54,10 @@ globber('projects/app/templates', {extension: 'mustache', absolute: true}, funct
 
 `options` can be the following
 
-* absolute `Boolean` - If `true`, all paths returned will be absolute, regardless of the initial path
-* extension `String` - Only search for files with extension `extension`
-* recursive `Boolean` - If `false`, will only search for files one level deep
-* includeDirectories `Boolean` - if `false`, the resulting `paths` array will only include paths to files, not paths to directories
+* `absolute` {Boolean} - If `true`, all paths returned will be absolute, regardless of the initial path
+* `extension` {String} - Only search for files with extension `extension`
+* `recursive` {Boolean} - If `false`, will only search for files one level deep
+* `includeDirectories` {Boolean} - if `false`, the resulting `paths` array will only include paths to files, not paths to directories
 
 `callback` function takes `err` and `paths` arguments.
 
