@@ -1,7 +1,7 @@
 {
     "name": "globber"
-  , "version": "0.0.1-dev"
-  , "description": "Wrapper around node-glob with convenient defaults"
+  , "version": "0.0.1"
+  , "description": "Wrapper around node-glob with a friendly DSL"
   , "author": "benjreinhart"
   , "engines":
     {
