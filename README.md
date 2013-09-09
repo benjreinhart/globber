@@ -1,16 +1,73 @@
 # Globber
 
-Wrapper around node-glob with convenient defaults.
+Wrapper around node-glob with a friendly DSL.
 
 ## Install
 
 `npm install globber`
 
+## Examples
+
+```javascript
+globber('projects/app/templates', {extension: 'mustache'}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'projects/app/templates/index.mustache',
+    'projects/app/templates/partials',
+    'projects/app/templates/partials/_form.mustache'
+  ]
+*/
+```
+
+```javascript
+globber('projects/app/templates', {extension: 'mustache', includeDirectories: false}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'projects/app/templates/index.mustache',
+    'projects/app/templates/partials/_form.mustache'
+  ]
+*/
+```
+
+```javascript
+globber('projects/app/templates', {extension: 'mustache', absolute: true}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    '/Users/breinhart/projects/app/templates/index.mustache',
+    '/Users/breinhart/projects/app/templates/partials',
+    '/Users/breinhart/projects/app/templates/partials/_form.mustache'
+  ]
+*/
+```
+
 ## API
 
 ##### globber(path[, options], callback)
 
+`path` can be base path to begin searching from or a glob string.
+
+`options` can be the following
+
+* absolute `Boolean` - If `true`, all paths returned will be absolute, regardless of the initial path
+* extension `String` - Only search for files with extension `extension`
+* recursive `Boolean` - If `false`, will only search for files one level deep
+* includeDirectories `Boolean` - if `false`, the resulting `paths` array will only include paths to files, not paths to directories
+
+`callback` function takes `err` and `paths` arguments.
+
 ##### globber.sync(path[, options])
+
+Synchronous version of `globber`.
+
+##### globber.glob
+
+A direct reference to https://github.com/isaacs/node-glob. This is mainly exposed for stubbing purposes in the globber test suite and should not be used. If you find yourself using this directly, you should probably just be using the node-glob library and not this one.
 
 ## License
 
