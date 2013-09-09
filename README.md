@@ -82,6 +82,8 @@ globber('projects/app/templates', {extension: 'mustache', absolute: true}, funct
 * `recursive` {Boolean} - If `false`, will only search for files one level deep
 * `includeDirectories` {Boolean} - if `false`, the resulting `paths` array will only include paths to files, not paths to directories
 
+Any options passed to globber not listed above will be passed to [node-glob](https://github.com/isaacs/node-glob).
+
 `callback` function takes `err` and `paths` arguments.
 
 ##### globber.sync(path[, options])
