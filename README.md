@@ -48,8 +48,8 @@ globber('projects/app/templates', function(err, paths){
 /*
   [
     'projects/app/templates/index.mustache',
-    'projects/app/templates/partials',
     'projects/app/templates/info.txt',
+    'projects/app/templates/partials',
     'projects/app/templates/partials/_form.mustache'
   ]
 */
