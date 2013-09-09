@@ -67,7 +67,7 @@ Synchronous version of `globber`.
 
 ##### globber.glob
 
-A direct reference to https://github.com/isaacs/node-glob. This is mainly exposed for stubbing purposes in the globber test suite and should not be used. If you find yourself using this directly, you should probably just be using the node-glob library and not this one.
+A direct reference to [node-glob](https://github.com/isaacs/node-glob). This is mainly exposed for stubbing purposes in the globber test suite and should not be used. If you find yourself using this directly, you should probably just be using the node-glob library and not this one.
 
 ## License
 
