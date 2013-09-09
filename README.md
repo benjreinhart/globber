@@ -8,6 +8,15 @@ Wrapper around node-glob with a friendly DSL.
 
 ## Examples
 
+Given the following paths exist:
+
+* /Users/ben/projects/app/templates/index.mustache
+* /Users/ben/projects/app/templates/info.txt
+* /Users/ben/projects/app/templates/partials/_form.mustache
+
+And the current working directory is /Users/ben
+
+
 ```javascript
 globber('projects/app/templates', {extension: 'mustache'}, function(err, paths){
   console.log(paths);
@@ -21,7 +30,19 @@ globber('projects/app/templates', {extension: 'mustache'}, function(err, paths){
 ```
 
 ```javascript
-globber('projects/app/templates/**/*', function(err, paths){
+globber('projects/app/templates/**/*.mustache' function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'projects/app/templates/index.mustache',
+    'projects/app/templates/partials/_form.mustache'
+  ]
+*/
+```
+
+```javascript
+globber('projects/app/templates', function(err, paths){
   console.log(paths);
 });
 /*
@@ -35,7 +56,7 @@ globber('projects/app/templates/**/*', function(err, paths){
 ```
 
 ```javascript
-globber('projects/app/templates/**/*', {includeDirectories: false}, function(err, paths){
+globber('projects/app/templates', {includeDirectories: false}, function(err, paths){
   console.log(paths);
 });
 /*
@@ -64,8 +85,8 @@ globber('projects/app/templates', {extension: 'mustache', absolute: true}, funct
 });
 /*
   [
-    '/Users/breinhart/projects/app/templates/index.mustache',
-    '/Users/breinhart/projects/app/templates/partials/_form.mustache'
+    '/Users/ben/projects/app/templates/index.mustache',
+    '/Users/ben/projects/app/templates/partials/_form.mustache'
   ]
 */
 ```
