@@ -21,6 +21,7 @@ globber('projects/app/templates', {extension: 'mustache'}, function(err, paths){
 */
 ```
 
+```javascript
 globber('projects/app/templates/**/*.mustache', function(err, paths){
   console.log(paths);
 });
