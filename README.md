@@ -10,83 +10,100 @@ Wrapper around [node-glob](https://github.com/isaacs/node-glob) with a friendly 
 
 Given the following paths exist:
 
-* /Users/ben/projects/app/templates/index.mustache
-* /Users/ben/projects/app/templates/info.txt
-* /Users/ben/projects/app/templates/partials/_form.mustache
+* /Users/ben/projects/contacts/templates/index.mustache
+* /Users/ben/projects/contacts/templates/show.mustache
+* /Users/ben/projects/todos/templates/index.mustache
+* /Users/ben/projects/todos/templates/info.txt
+* /Users/ben/projects/todos/templates/partials/_form.mustache
 
 And the current working directory is /Users/ben
 
 
 ```javascript
-globber('projects/app/templates', {extension: 'mustache'}, function(err, paths){
+globber('projects/todos/templates', {extension: 'mustache'}, function(err, paths){
   console.log(paths);
 });
 /*
   [
-    'projects/app/templates/index.mustache',
-    'projects/app/templates/partials/_form.mustache'
+    'projects/todos/templates/index.mustache',
+    'projects/todos/templates/partials/_form.mustache'
   ]
 */
 ```
 
 ```javascript
-globber('projects/app/templates/**/*.mustache' function(err, paths){
+var basePaths = ['projects/todos/templates', 'projects/contacts/templates'];
+globber(basePaths, {extension: 'mustache'}, function(err, paths){
   console.log(paths);
 });
 /*
   [
-    'projects/app/templates/index.mustache',
-    'projects/app/templates/partials/_form.mustache'
+    'projects/contacts/templates/index.mustache',
+    'projects/contacts/templates/show.mustache',
+    'projects/todos/templates/partials/_form.mustache',
+    'projects/todos/templates/index.mustache'
   ]
 */
 ```
 
 ```javascript
-globber('projects/app/templates', function(err, paths){
+globber('projects/todos/templates/**/*.mustache' function(err, paths){
   console.log(paths);
 });
 /*
   [
-    'projects/app/templates/index.mustache',
-    'projects/app/templates/info.txt',
-    'projects/app/templates/partials',
-    'projects/app/templates/partials/_form.mustache'
+    'projects/todos/templates/index.mustache',
+    'projects/todos/templates/partials/_form.mustache'
   ]
 */
 ```
 
 ```javascript
-globber('projects/app/templates', {includeDirectories: false}, function(err, paths){
+globber('projects/todos/templates', function(err, paths){
   console.log(paths);
 });
 /*
   [
-    'projects/app/templates/index.mustache',
-    'projects/app/templates/info.txt'
-    'projects/app/templates/partials/_form.mustache'
+    'projects/todos/templates/index.mustache',
+    'projects/todos/templates/info.txt',
+    'projects/todos/templates/partials',
+    'projects/todos/templates/partials/_form.mustache'
   ]
 */
 ```
 
 ```javascript
-globber('projects/app/templates', {extension: 'mustache', recursive: false}, function(err, paths){
+globber('projects/todos/templates', {includeDirectories: false}, function(err, paths){
   console.log(paths);
 });
 /*
   [
-    'projects/app/templates/index.mustache'
+    'projects/todos/templates/index.mustache',
+    'projects/todos/templates/info.txt'
+    'projects/todos/templates/partials/_form.mustache'
   ]
 */
 ```
 
 ```javascript
-globber('projects/app/templates', {extension: 'mustache', absolute: true}, function(err, paths){
+globber('projects/todos/templates', {extension: 'mustache', recursive: false}, function(err, paths){
   console.log(paths);
 });
 /*
   [
-    '/Users/ben/projects/app/templates/index.mustache',
-    '/Users/ben/projects/app/templates/partials/_form.mustache'
+    'projects/todos/templates/index.mustache'
+  ]
+*/
+```
+
+```javascript
+globber('projects/todos/templates', {extension: 'mustache', absolute: true}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    '/Users/ben/projects/todos/templates/index.mustache',
+    '/Users/ben/projects/todos/templates/partials/_form.mustache'
   ]
 */
 ```
@@ -95,7 +112,7 @@ globber('projects/app/templates', {extension: 'mustache', absolute: true}, funct
 
 ##### globber(path[, options], callback)
 
-`path` can be base path to begin searching from or a glob string.
+`path` can be a base path to begin searching from or a glob string or an array of base paths and/or glob strings.
 
 `options` can be the following
 
@@ -111,10 +128,6 @@ Any options passed to globber not listed above will be passed to [node-glob](htt
 ##### globber.sync(path[, options])
 
 Synchronous version of `globber`.
-
-##### globber.glob
-
-A direct reference to [node-glob](https://github.com/isaacs/node-glob). This is mainly exposed for stubbing purposes in the globber test suite and should not be used. If you find yourself using this directly, you should probably just be using the node-glob library and not this one.
 
 ## License
 

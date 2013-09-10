@@ -20,6 +20,7 @@
   , "dependencies":
     {
         "glob": "~3.2.1"
+      , "async": "~0.2.9"
     }
 
   , "devDependencies":
