@@ -2,9 +2,7 @@ fs = require 'fs'
 glob = require 'glob'
 Path = require 'path'
 
-{partition} = require 'minutils'
-
-validGlobberOptions = [
+supportedOptions = [
   'absolute'
   'extension'
   'recursive'
@@ -57,7 +55,13 @@ getGlobPath = (basePath, options) ->
   Path.normalize path
 
 partitionOptions = (options) ->
-  partition options, (_, key) -> key in validGlobberOptions
+  [supported, other] = (result = [{}, {}])
+
+  for own key, value of options
+    do (key, value) ->
+      (if key in supportedOptions then supported else other)[key] = value
+
+  [supported, other]
 
 isGlob = (str) ->
   (str.indexOf '*') isnt -1
