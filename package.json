@@ -1,6 +1,6 @@
 {
     "name": "globber"
-  , "version": "0.0.22"
+  , "version": "0.0.23"
   , "description": "Wrapper around node-glob with a friendly DSL"
   , "author": "benjreinhart"
   , "engines":
