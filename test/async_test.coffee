@@ -13,7 +13,7 @@ describe 'globber/async', ->
       ]
 
     @glob = utils.glob
-    sinon.stub utils, 'isFile', (path) -> path isnt 'path/to/something/else'
+    sinon.stub utils, 'isFile', (path, cb) -> cb null, path isnt 'path/to/something/else'
 
   afterEach ->
     process.cwd.restore()

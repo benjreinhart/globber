@@ -13,6 +13,6 @@ globPath = (path, options) ->
   paths = utils.glob.sync pattern, options
 
   if options.includeDirectories is false
-    paths = paths.filter utils.isFile
+    paths = paths.filter utils.isFileSync
 
   paths

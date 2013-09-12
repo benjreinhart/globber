@@ -21,7 +21,12 @@ exports.getGlobPattern = (basePath, options) ->
 
   Path.normalize path
 
-exports.isFile = (path) ->
+exports.isFile = (path, cb) ->
+  fs.stat path, (err, stats) ->
+    if err? then return cb(err)
+    cb null, stats.isFile()
+
+exports.isFileSync = (path) ->
   (fs.statSync path).isFile()
 
 exports.isString = (obj) ->

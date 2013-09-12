@@ -19,7 +19,14 @@ globPath = (path, options, cb) ->
     if err? then return cb(err)
 
     if options.includeDirectories is false
-      paths = paths.filter utils.isFile
-
-    cb null, paths
+      async.filter paths, isFile, (files) -> cb null, files
+    else
+      cb null, paths
   undefined
+
+# Wrap utils.isFile to be consistent with what the async.filter iterator
+# callback expects (it expects one argument, true or false, no error argument).
+isFile = (path, cb) ->
+  utils.isFile path, (err, file) ->
+    if err? then throw err
+    cb file

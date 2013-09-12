@@ -12,12 +12,12 @@ describe 'globber/sync', ->
     ]
     @globSync = utils.glob.sync
 
-    sinon.stub utils, 'isFile', (path) -> path isnt 'path/to/something/else'
+    sinon.stub utils, 'isFileSync', (path) -> path isnt 'path/to/something/else'
 
   afterEach ->
     process.cwd.restore()
     utils.glob.sync.restore()
-    utils.isFile.restore()
+    utils.isFileSync.restore()
 
   it 'recursively searches a starting path and returns all paths found', ->
     paths = globber.sync 'path/to/something', {extension: 'txt'}
