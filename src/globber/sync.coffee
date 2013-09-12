@@ -15,4 +15,7 @@ globPath = (path, options) ->
   if options.includeDirectories is false
     paths = paths.filter utils.isFileSync
 
+  if excludedPaths = options.exclude
+    paths = utils.rejectPaths paths, excludedPaths
+
   paths
