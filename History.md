@@ -1,3 +1,8 @@
+0.0.4 / 2013-09-09
+==================
+
+* Made `globber` use async version of isFile when `includeDirectories` options is `false`.
+
 0.0.3 / 2013-09-09
 ==================
 
