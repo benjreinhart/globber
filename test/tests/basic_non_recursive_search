@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    {recursive: false} will only search the directory
+    provided for file and directory paths without
+    searching infinitely deep.
+ *******************************************************/
+
+var expectedPaths = [
+  'test/files/example',
+  'test/files/form.mustache',
+  'test/files/index.mustache',
+  'test/files/info.txt',
+  'test/files/partials'
+];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync('test/files', {recursive: false});
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber('test/files', {recursive: false}, function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});

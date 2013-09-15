@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    Setting the includeDirectories option to false will
+    only return paths that are files.
+ *******************************************************/
+
+/*
+  For instance, it would return
+  'test/files/partials/_form.mustache' and 'test/files/partials/_header.mustache'
+  but not 'test/files/partials'
+*/
+var expectedPaths = [
+  'test/files/example/example.info.txt',
+  'test/files/example/index.mustache',
+  'test/files/form.mustache',
+  'test/files/index.mustache',
+  'test/files/info.txt',
+  'test/files/partials/_form.mustache',
+  'test/files/partials/_header.mustache'
+];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync('test/files', {includeDirectories: false});
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber('test/files', {includeDirectories: false}, function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});

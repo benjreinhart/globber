@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    Setting the absolute option to true will return
+    absolute paths even if the original path argument is
+    a relative path.
+ *******************************************************/
+
+
+var absolutePathToCwd = process.cwd(),
+    expectedPaths = [
+      absolutePathToCwd + '/test/files/example',
+      absolutePathToCwd + '/test/files/example/example.info.txt',
+      absolutePathToCwd + '/test/files/example/index.mustache',
+      absolutePathToCwd + '/test/files/form.mustache',
+      absolutePathToCwd + '/test/files/index.mustache',
+      absolutePathToCwd + '/test/files/info.txt',
+      absolutePathToCwd + '/test/files/partials',
+      absolutePathToCwd + '/test/files/partials/_form.mustache',
+      absolutePathToCwd + '/test/files/partials/_header.mustache'
+    ];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync('test/files', {absolute: true});
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber('test/files', {absolute: true}, function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});

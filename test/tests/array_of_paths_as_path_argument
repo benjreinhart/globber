@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    Accepts an array of paths/patterns as the first
+    argument.
+ *******************************************************/
+
+
+var expectedPaths = [
+  'test/files/partials/_form.mustache',
+  'test/files/partials/_header.mustache',
+  'test/files/example/example.info.txt',
+  'test/files/example/index.mustache'
+];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync(['test/files/partials', 'test/files/example']);
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber(['test/files/partials', 'test/files/example'], function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});

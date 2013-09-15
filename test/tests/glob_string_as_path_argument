@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    Accepts a glob string as the first argument over a
+    path.
+ *******************************************************/
+
+
+var expectedPaths = [
+  'test/files/example',
+  'test/files/example/example.info.txt',
+  'test/files/example/index.mustache',
+  'test/files/form.mustache',
+  'test/files/index.mustache',
+  'test/files/info.txt',
+  'test/files/partials',
+  'test/files/partials/_form.mustache',
+  'test/files/partials/_header.mustache'
+];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync('test/files/**/*');
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber('test/files/**/*', function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});

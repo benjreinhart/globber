@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    Exclude multiple paths by providing an array of paths
+    as the exclude option.
+ *******************************************************/
+
+var expectedPaths = [
+  'test/files/form.mustache',
+  'test/files/index.mustache',
+  'test/files/info.txt'
+];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync('test/files', {exclude: ['test/files/partials', 'test/files/example']});
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber('test/files', {exclude: ['test/files/partials', 'test/files/example']}, function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});

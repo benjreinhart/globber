@@ -26,8 +26,7 @@
   , "devDependencies":
     {
         "chai"                : "~1.7.2"
-      , "sinon"               : "~1.7.3"
-      , "mocha"               : "~1.12.0"
+      , "mocha"               : "~1.13.0"
       , "coffee-script-redux" : "2.0.0-beta7"
     }
 

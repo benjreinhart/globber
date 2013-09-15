@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    Providing an extension option will only return paths
+    of files that have that extension.
+ *******************************************************/
+
+var expectedPaths = [
+  'test/files/example/index.mustache',
+  'test/files/form.mustache',
+  'test/files/index.mustache',
+  'test/files/partials/_form.mustache',
+  'test/files/partials/_header.mustache'
+];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync('test/files', {extension: 'mustache'});
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber('test/files', {extension: 'mustache'}, function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});
