@@ -73,6 +73,18 @@ globber('projects/todos/templates', function(err, paths){
 ```
 
 ```javascript
+globber('projects/todos/templates', {exclude: ['projects/todos/templates/info.txt', 'projects/todos/templates/partials/_form.mustache']}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'projects/todos/templates/index.mustache',
+    'projects/todos/templates/partials'
+  ]
+*/
+```
+
+```javascript
 globber('projects/todos/templates', {includeDirectories: false}, function(err, paths){
   console.log(paths);
 });
@@ -118,6 +130,7 @@ globber('projects/todos/templates', {extension: 'mustache', absolute: true}, fun
 
 * `absolute` {Boolean} - If `true`, all paths returned will be absolute, regardless of the initial path
 * `extension` {String} - Only search for files with extension `extension`
+* `exclude` {String|Array} - Either a path or array of paths to be excluded from the result set
 * `recursive` {Boolean} - If `false`, will only search for files one level deep
 * `includeDirectories` {Boolean} - if `false`, the resulting `paths` array will only include paths to files, not paths to directories
 
