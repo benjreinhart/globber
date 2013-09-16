@@ -1,7 +1,17 @@
+0.1.0 / 2013-90-11
+==================
+
+* Added `exclude` option in order to exclude certain paths
+* Rewrote all the tests in a completely different style. They're better than before as they're actually running against real files on the file system
+* Removed sinon dev dependency
+* Upgraded Mocha version
+* Moved License out of README into own file
+* Rewrote README
+
 0.0.4 / 2013-09-11
 ==================
 
-* Made `globber` use async version of isFile when `includeDirectories` options is `false`.
+* Made `globber` use async version of `isFile` when `includeDirectories` options is `false`.
 
 0.0.3 / 2013-09-09
 ==================
