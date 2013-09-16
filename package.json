@@ -3,6 +3,7 @@
   , "version": "0.1.0"
   , "description": "Wrapper around node-glob with a friendly DSL"
   , "author": "benjreinhart"
+  , "homepage": "http://benjreinhart.github.io/globber"
   , "engines":
     {
       "node": ">=0.8"
