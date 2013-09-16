@@ -27,3 +27,6 @@ describe 'globber', ->
 
   it 'excludes multiple paths if the exclude option is an array of paths', (done) ->
     run 'test/tests/exclude_multiple_paths', done
+
+  it 'properly works with a combination of options', (done) ->
+    run 'test/tests/combination', done

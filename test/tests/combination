@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    Combining multiple options works as expected.
+ *******************************************************/
+
+
+var absolutePathToCwd = process.cwd(),
+    expectedPaths = [
+      absolutePathToCwd + '/test/files/partials/_form.mustache',
+      absolutePathToCwd + '/test/files/partials/_header.mustache',
+      absolutePathToCwd + '/test/files/form.mustache',
+      absolutePathToCwd + '/test/files/index.mustache'
+    ];
+
+/******
+  SYNC
+ ******/
+
+var options = {
+  absolute: true,
+  includeDirectories: false,
+  exclude: 'test/files/example',
+  recursive: false,
+  extension: 'mustache'
+};
+
+var actualSyncPaths = globber.sync(['test/files/partials', 'test/files'], options);
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber(['test/files/partials', 'test/files'], options, function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});
