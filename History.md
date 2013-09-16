@@ -1,4 +1,10 @@
-0.1.0 / 2013-90-11
+0.1.1 / 2013-09-15
+==================
+
+* Added tavis.ci service hook
+* Added homepage
+
+0.1.0 / 2013-09-15
 ==================
 
 * Added `exclude` option in order to exclude certain paths
