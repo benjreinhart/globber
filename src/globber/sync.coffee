@@ -12,10 +12,10 @@ globPath = (path, options) ->
   pattern = utils.getGlobPattern path, options
   paths = utils.glob.sync pattern, options
 
-  if options.includeDirectories is false
-    paths = paths.filter utils.isFileSync
-
   if excludedPaths = options.exclude
     paths = utils.rejectPaths paths, excludedPaths
+
+  if options.includeDirectories is false
+    paths = paths.filter utils.isFileSync
 
   paths
