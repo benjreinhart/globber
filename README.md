@@ -1,5 +1,7 @@
 # Globber
 
+[![Build Status](https://travis-ci.org/benjreinhart/globber.png)](https://travis-ci.org/benjreinhart/globber)
+
 Wrapper around [node-glob](https://github.com/isaacs/node-glob) with a friendly DSL.
 
 ## Install
