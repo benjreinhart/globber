@@ -6,116 +6,23 @@ Wrapper around [node-glob](https://github.com/isaacs/node-glob) with a friendly 
 
 `npm install globber`
 
-## Examples
+## Basic Example
 
-Given the following paths exist:
-
-* /Users/ben/projects/contacts/templates/index.mustache
-* /Users/ben/projects/contacts/templates/show.mustache
-* /Users/ben/projects/todos/templates/index.mustache
-* /Users/ben/projects/todos/templates/info.txt
-* /Users/ben/projects/todos/templates/partials/_form.mustache
-
-And the current working directory is /Users/ben
-
+For a more elaborate set of examples, check out [the examples below](#more-examples) and the [tests](https://github.com/benjreinhart/globber/tree/master/test/tests).
 
 ```javascript
-globber('projects/todos/templates', {extension: 'mustache'}, function(err, paths){
+globber('project/templates', function(err, paths){
   console.log(paths);
 });
 /*
   [
-    'projects/todos/templates/index.mustache',
-    'projects/todos/templates/partials/_form.mustache'
-  ]
-*/
-```
-
-```javascript
-var basePaths = ['projects/todos/templates', 'projects/contacts/templates'];
-globber(basePaths, {extension: 'mustache'}, function(err, paths){
-  console.log(paths);
-});
-/*
-  [
-    'projects/contacts/templates/index.mustache',
-    'projects/contacts/templates/show.mustache',
-    'projects/todos/templates/partials/_form.mustache',
-    'projects/todos/templates/index.mustache'
-  ]
-*/
-```
-
-```javascript
-globber('projects/todos/templates/**/*.mustache' function(err, paths){
-  console.log(paths);
-});
-/*
-  [
-    'projects/todos/templates/index.mustache',
-    'projects/todos/templates/partials/_form.mustache'
-  ]
-*/
-```
-
-```javascript
-globber('projects/todos/templates', function(err, paths){
-  console.log(paths);
-});
-/*
-  [
-    'projects/todos/templates/index.mustache',
-    'projects/todos/templates/info.txt',
-    'projects/todos/templates/partials',
-    'projects/todos/templates/partials/_form.mustache'
-  ]
-*/
-```
-
-```javascript
-globber('projects/todos/templates', {exclude: ['projects/todos/templates/info.txt', 'projects/todos/templates/partials/_form.mustache']}, function(err, paths){
-  console.log(paths);
-});
-/*
-  [
-    'projects/todos/templates/index.mustache',
-    'projects/todos/templates/partials'
-  ]
-*/
-```
-
-```javascript
-globber('projects/todos/templates', {includeDirectories: false}, function(err, paths){
-  console.log(paths);
-});
-/*
-  [
-    'projects/todos/templates/index.mustache',
-    'projects/todos/templates/info.txt'
-    'projects/todos/templates/partials/_form.mustache'
-  ]
-*/
-```
-
-```javascript
-globber('projects/todos/templates', {extension: 'mustache', recursive: false}, function(err, paths){
-  console.log(paths);
-});
-/*
-  [
-    'projects/todos/templates/index.mustache'
-  ]
-*/
-```
-
-```javascript
-globber('projects/todos/templates', {extension: 'mustache', absolute: true}, function(err, paths){
-  console.log(paths);
-});
-/*
-  [
-    '/Users/ben/projects/todos/templates/index.mustache',
-    '/Users/ben/projects/todos/templates/partials/_form.mustache'
+    'project/templates/sessions',
+    'project/templates/sessions/info.txt',
+    'project/templates/sessions/login.mustache',
+    'project/templates/users',
+    'project/templates/users/index.mustache',
+    'project/templates/users/info.txt',
+    'project/templates/users/show.mustache'
   ]
 */
 ```
@@ -141,6 +48,160 @@ Any options passed to globber not listed above will be passed to [node-glob](htt
 ##### globber.sync(path[, options])
 
 Synchronous version of `globber`.
+
+## More Examples
+
+Give the current directory structure:
+
+```
+/Users/ben
+  └ project
+      └ templates
+          └ sessions
+              └ info.txt
+                login.mustache
+            users
+              └ index.mustache
+                info.txt
+                show.mustache
+```
+
+and a current working directory of `/Users/ben`:
+
+<hr />
+
+Perform a recursive search for all files in the `project/templates` directory relative to the current working directory:
+
+```javascript
+globber('project/templates', function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'project/templates/sessions',
+    'project/templates/sessions/info.txt',
+    'project/templates/sessions/login.mustache',
+    'project/templates/users',
+    'project/templates/users/index.mustache',
+    'project/templates/users/info.txt',
+    'project/templates/users/show.mustache'
+  ]
+*/
+```
+
+<hr />
+
+Do the same as the above but exclude certain paths and return all paths as absolute paths:
+
+```javascript
+var pathsToExclude = ['project/templates/users/info.txt', 'project/templates/sessions/info.txt'];
+globber('project/templates', {absolute: true, exclude: pathsToExclude}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    '/Users/ben/project/templates/sessions',
+    '/Users/ben/project/templates/sessions/login.mustache',
+    '/Users/ben/project/templates/users',
+    '/Users/ben/project/templates/users/index.mustache',
+    '/Users/ben/project/templates/users/show.mustache'
+  ]
+*/
+```
+
+<hr />
+
+Scope the recursive search only to files with a "mustache" extension in the `project/templates` directory relative to the current working directory:
+
+```javascript
+globber('project/templates', {extension: 'mustache'}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'project/templates/sessions',
+    'project/templates/sessions/login.mustache',
+    'project/templates/users',
+    'project/templates/users/index.mustache',
+    'project/templates/users/show.mustache'
+  ]
+*/
+```
+
+<hr />
+
+Search multiple directories:
+
+```javascript
+globber(['project/templates/sessions', 'project/templates/users'], function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'project/templates/sessions',
+    'project/templates/sessions/info.txt',
+    'project/templates/sessions/login.mustache',
+    'project/templates/users',
+    'project/templates/users/index.mustache',
+    'project/templates/users/info.txt',
+    'project/templates/users/show.mustache'
+  ]
+*/
+```
+
+<hr />
+
+Only search in the directory provided, not in any sub directories:
+
+```javascript
+globber('project/templates', {recursive: false}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'project/templates/sessions',
+    'project/templates/users'
+  ]
+*/
+```
+
+<hr />
+
+Only return paths that are files (will remove paths of directories from the result set):
+
+```javascript
+globber('project/templates', {includeDirectories: false}, function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'project/templates/sessions/info.txt',
+    'project/templates/sessions/login.mustache',
+    'project/templates/users/index.mustache',
+    'project/templates/users/info.txt',
+    'project/templates/users/show.mustache'
+  ]
+*/
+```
+
+<hr />
+
+Pass a glob string directly:
+
+```javascript
+globber('project/templates/**/*.mustache', function(err, paths){
+  console.log(paths);
+});
+/*
+  [
+    'project/templates/sessions',
+    'project/templates/sessions/login.mustache',
+    'project/templates/users',
+    'project/templates/users/index.mustache',
+    'project/templates/users/show.mustache'
+  ]
+*/
+```
 
 ## License
 
