@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Globber by benjreinhart</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Globber</h1>
+        <p>Wrapper around node-glob with a friendly DSL</p>
+        <p class="view"><a href="https://github.com/benjreinhart/globber">View the Project on GitHub <small>benjreinhart/globber</small></a></p>
+        <ul>
+          <li><a href="https://github.com/benjreinhart/globber/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/benjreinhart/globber/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/benjreinhart/globber">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="globber" class="anchor" href="#globber"><span class="octicon octicon-link"></span></a>Globber</h1>
+
+<p><a href="https://travis-ci.org/benjreinhart/globber"><img src="https://travis-ci.org/benjreinhart/globber.png" alt="Build Status"></a></p>
+
+<p>Wrapper around <a href="https://github.com/isaacs/node-glob">node-glob</a> with a friendly DSL.</p>
+
+<p>Check out the <a href="#examples">examples below</a>.</p>
+
+<h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p><code>npm install globber</code></p>
+
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
+
+<h5>
+<a name="globberpath-options-callback" class="anchor" href="#globberpath-options-callback"><span class="octicon octicon-link"></span></a>globber(path[, options], callback)</h5>
+
+<p><code>path</code> can be a base path to begin searching from or a glob string or an array of base paths and/or glob strings.</p>
+
+<p><code>options</code> can be the following</p>
+
+<ul>
+<li>
+<code>absolute</code> {Boolean} - If <code>true</code>, all paths returned will be absolute, regardless of the initial path</li>
+<li>
+<code>extension</code> {String} - Only search for files with extension <code>extension</code>
+</li>
+<li>
+<code>exclude</code> {String|Array} - Either a path or array of paths to be excluded from the result set</li>
+<li>
+<code>recursive</code> {Boolean} - If <code>false</code>, will only search for files one level deep</li>
+<li>
+<code>includeDirectories</code> {Boolean} - if <code>false</code>, the resulting <code>paths</code> array will only include paths to files, not paths to directories</li>
+</ul><p>Any options passed to globber not listed above will be passed to <a href="https://github.com/isaacs/node-glob">node-glob</a>.</p>
+
+<p><code>callback</code> function takes <code>err</code> and <code>paths</code> arguments.</p>
+
+<h5>
+<a name="globbersyncpath-options" class="anchor" href="#globbersyncpath-options"><span class="octicon octicon-link"></span></a>globber.sync(path[, options])</h5>
+
+<p>Synchronous version of <code>globber</code>.</p>
+
+<h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>For a more elaborate set of examples, check out the <a href="https://github.com/benjreinhart/globber/tree/master/test/tests">tests</a>.</p>
+
+<p>Give the current directory structure:</p>
+
+<pre><code>/Users/ben
+  └ project
+      └ templates
+          └ sessions
+              └ info.txt
+                login.mustache
+            users
+              └ index.mustache
+                info.txt
+                show.mustache
+</code></pre>
+
+<p>and a current working directory of <code>/Users/ben</code>:</p>
+
+<hr><p>Perform a recursive search for all files in the <code>project/templates</code> directory relative to the current working directory:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">globber</span><span class="p">(</span><span class="s1">'project/templates'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">paths</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    'project/templates/sessions',</span>
+<span class="cm">    'project/templates/sessions/info.txt',</span>
+<span class="cm">    'project/templates/sessions/login.mustache',</span>
+<span class="cm">    'project/templates/users',</span>
+<span class="cm">    'project/templates/users/index.mustache',</span>
+<span class="cm">    'project/templates/users/info.txt',</span>
+<span class="cm">    'project/templates/users/show.mustache'</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<hr><p>Do the same as the above but exclude certain paths and return all paths as absolute paths:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">pathsToExclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'project/templates/users/info.txt'</span><span class="p">,</span> <span class="s1">'project/templates/sessions/info.txt'</span><span class="p">];</span>
+<span class="nx">globber</span><span class="p">(</span><span class="s1">'project/templates'</span><span class="p">,</span> <span class="p">{</span><span class="nx">absolute</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">exclude</span><span class="o">:</span> <span class="nx">pathsToExclude</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">paths</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    '/Users/ben/project/templates/sessions',</span>
+<span class="cm">    '/Users/ben/project/templates/sessions/login.mustache',</span>
+<span class="cm">    '/Users/ben/project/templates/users',</span>
+<span class="cm">    '/Users/ben/project/templates/users/index.mustache',</span>
+<span class="cm">    '/Users/ben/project/templates/users/show.mustache'</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<hr><p>Scope the recursive search only to files with a "mustache" extension in the <code>project/templates</code> directory relative to the current working directory:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">globber</span><span class="p">(</span><span class="s1">'project/templates'</span><span class="p">,</span> <span class="p">{</span><span class="nx">extension</span><span class="o">:</span> <span class="s1">'mustache'</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">paths</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    'project/templates/sessions',</span>
+<span class="cm">    'project/templates/sessions/login.mustache',</span>
+<span class="cm">    'project/templates/users',</span>
+<span class="cm">    'project/templates/users/index.mustache',</span>
+<span class="cm">    'project/templates/users/show.mustache'</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<hr><p>Search multiple directories:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">globber</span><span class="p">([</span><span class="s1">'project/templates/sessions'</span><span class="p">,</span> <span class="s1">'project/templates/users'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">paths</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    'project/templates/sessions',</span>
+<span class="cm">    'project/templates/sessions/info.txt',</span>
+<span class="cm">    'project/templates/sessions/login.mustache',</span>
+<span class="cm">    'project/templates/users',</span>
+<span class="cm">    'project/templates/users/index.mustache',</span>
+<span class="cm">    'project/templates/users/info.txt',</span>
+<span class="cm">    'project/templates/users/show.mustache'</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<hr><p>Only search in the directory provided, not in any sub directories:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">globber</span><span class="p">(</span><span class="s1">'project/templates'</span><span class="p">,</span> <span class="p">{</span><span class="nx">recursive</span><span class="o">:</span> <span class="kc">false</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">paths</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    'project/templates/sessions',</span>
+<span class="cm">    'project/templates/users'</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<hr><p>Only return paths that are files (will remove paths of directories from the result set):</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">globber</span><span class="p">(</span><span class="s1">'project/templates'</span><span class="p">,</span> <span class="p">{</span><span class="nx">includeDirectories</span><span class="o">:</span> <span class="kc">false</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">paths</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    'project/templates/sessions/info.txt',</span>
+<span class="cm">    'project/templates/sessions/login.mustache',</span>
+<span class="cm">    'project/templates/users/index.mustache',</span>
+<span class="cm">    'project/templates/users/info.txt',</span>
+<span class="cm">    'project/templates/users/show.mustache'</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<hr><p>Pass a glob string directly:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">globber</span><span class="p">(</span><span class="s1">'project/templates/**/*.mustache'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">paths</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    'project/templates/sessions',</span>
+<span class="cm">    'project/templates/sessions/login.mustache',</span>
+<span class="cm">    'project/templates/users',</span>
+<span class="cm">    'project/templates/users/index.mustache',</span>
+<span class="cm">    'project/templates/users/show.mustache'</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><a href="https://github.com/benjreinhart/globber/blob/master/LICENSE.txt">MIT</a></p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/benjreinhart">benjreinhart</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
