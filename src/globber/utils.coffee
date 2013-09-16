@@ -26,7 +26,7 @@ exports.isString = isString = (obj) ->
 
 exports.isFile = (path, cb) ->
   fs.stat path, (err, stats) ->
-    if err? then return cb(err) else cb(null, stats.isFile())
+    if err? then cb(err) else cb(null, stats.isFile())
 
 exports.isFileSync = (path) ->
   (fs.statSync path).isFile()
