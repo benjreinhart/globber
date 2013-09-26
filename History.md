@@ -1,3 +1,8 @@
+0.1.2 / 2013-09-26
+==================
+
+* Bug fix where if passed a path to a file, an empty array was returned
+
 0.1.1 / 2013-09-15
 ==================
 
