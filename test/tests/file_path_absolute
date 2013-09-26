@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    If an array of paths are given to globber and each
+    of those paths are files, then the result should be
+    an array of absolute paths to those files when the
+    absolute option is true.
+ *******************************************************/
+
+var absolutePathToCwd = process.cwd(),
+    expectedPaths = [
+      absolutePathToCwd + '/test/files/index.mustache',
+      absolutePathToCwd + '/test/files/form.mustache'
+    ];
+
+
+var paths = ['test/files/index.mustache', 'test/files/form.mustache'],
+    options = {absolute: true};
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync(paths, options);
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber(paths, options, function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});

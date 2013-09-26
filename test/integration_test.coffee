@@ -30,3 +30,9 @@ describe 'globber', ->
 
   it 'properly works with a combination of options', (done) ->
     run 'test/tests/combination', done
+
+  it 'returns the given path in an array if the given path is a file', (done) ->
+    run 'test/tests/file_path', done
+
+  it 'resolves paths to files as absolute paths', (done) ->
+    run 'test/tests/file_path_absolute', done

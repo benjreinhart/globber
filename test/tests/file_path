@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+var globber = require(process.cwd()),
+    expect  = require('chai').expect;
+
+/********************************************************
+  TEST:
+    If path given to globber is a file, globber just
+    returns an array with one result (the file).
+ *******************************************************/
+
+
+var expectedPaths = ['test/files/index.mustache'];
+
+/******
+  SYNC
+ ******/
+var actualSyncPaths = globber.sync('test/files/index.mustache');
+expect(actualSyncPaths).to.eql(expectedPaths);
+
+
+/*******
+  ASYNC
+ *******/
+globber('test/files/index.mustache', function (err, actualAsyncPaths) {
+  expect(actualAsyncPaths).to.eql(expectedPaths);
+});
